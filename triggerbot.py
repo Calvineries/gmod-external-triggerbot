@@ -11,13 +11,15 @@ engine = pymem.pymem.process.module_from_name(pm.process_handle, 'engine.dll').l
 
 LocalPlayer = pm.read_uint(client + 0x007377A4)
 LocalPlayerTarget = 0x3068
-MaxOnlinePlayers = 0x4F4000
+MaxOnlinePlayers = pm.read_uint(engine + 0x4F4000)
+
 
 #TriggerBot
 while 0 != 1:
     time.sleep(0.01)
+    TargetID = pm.read_uint(LocalPlayer + LocalPlayerTarget)
     #If target player ID is less than max online player
-    if pm.read_uint(LocalPlayer + LocalPlayerTarget) <= pm.read_uint(engine + MaxOnlinePlayers):
+    if TargetID <= MaxOnlinePlayers:
         #If target player ID is not 0
-        if pm.read_uint(LocalPlayer + LocalPlayerTarget) != 0:
+        if TargetID != 0:
             pyautogui.leftClick()
